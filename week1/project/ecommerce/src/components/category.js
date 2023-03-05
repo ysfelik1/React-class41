@@ -1,8 +1,9 @@
 const Category = ({ className, selectCategory, categoryName }) => {
     return (
-      <div className={className} onClick={() => selectCategory(categoryName)}>
+      <nav className={className} onClick={() => selectCategory(categoryName)}>
         {categoryName}
-      </div>
+      </nav>
+      
     );
   };
   export default Category;
