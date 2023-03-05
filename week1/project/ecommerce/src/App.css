@@ -11,14 +11,16 @@
   font-weight: 600;
   margin: 2px;
   padding: 10px;
+  transition: background-color 1s ease-out 100ms
 }
 
 .category-item:hover {
-  background-color: dimgrey;
+  background-color: rgb(177, 176, 176);
 }
 
 .category-item-selected {
   background-color: dimgrey;
+  font-weight: 700;
 }
 .cards {
   display: flex;
@@ -49,9 +51,6 @@
   object-fit: contain;
   width: 100%;
 }
-
-
-
 
 
 @media (max-width: 600px) {
