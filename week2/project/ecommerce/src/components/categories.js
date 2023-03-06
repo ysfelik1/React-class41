@@ -1,7 +1,22 @@
-import allCategories from '../fake-data/all-categories';
 import Category from './category';
-
+import React, { useEffect, useState } from 'react';
 const Categories = ({ selectCategory, category }) => {
+ 
+  const [allCategories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products/categories');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <div className="category">
       {allCategories.map((categoryItem, index) => {

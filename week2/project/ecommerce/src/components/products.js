@@ -1,11 +1,26 @@
 import Product from './product';
-import allProducts from '../fake-data/all-products';
+import React, { useEffect, useState } from 'react';
 
 const Products = ({ category }) => {
+
+  const [allProducts, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   let filteredProducts = allProducts;
   if (category !== 'all') {
     filteredProducts = allProducts.filter((product) => {
-      return `FAKE: ${product.category}` === category;
+      return product.category === category;
     });
   }
   return (
