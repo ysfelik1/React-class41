@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import './App.css';
+import './loader.css';
+
 import Categories from './components/categories';
 import Products from './components/products';
 
 function App() {
   const [category, setCategory] = useState('all');
+
 
   function selectCategory(categoryName) {
     if (categoryName === category) {
