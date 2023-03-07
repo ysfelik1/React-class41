@@ -6,7 +6,7 @@ body, html {
 .loader {
     display: inline-block;
     width: 150px;
-    height: 100px;
+    height: 60px;
     position: relative;
     border: 10px solid #2065be;
     top: 50%;
@@ -20,28 +20,6 @@ body, html {
     width: 100%;
     background-color:#2065be;
     animation: loader-inner 2s infinite ease-in;
-  }
-  
-  @keyframes loader {
-    0% {
-      transform: rotate(0deg);
-    }
-    
-    25% {
-      transform: rotate(180deg);
-    }
-    
-    50% {
-      transform: rotate(180deg);
-    }
-    
-    75% {
-      transform: rotate(360deg);
-    }
-    
-    100% {
-      transform: rotate(360deg);
-    }
   }
   
   @keyframes loader-inner {

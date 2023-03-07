@@ -1,7 +1,12 @@
 
 const Loader = (isLoading) => {
     return (
-        <span class="loader"><span class="loader-inner"></span>loading...</span>
+        <span class="loader">
+        <span class="loader-inner">  
+          
+         Loading...
+      </span>
+      </span>
     )
 }
 

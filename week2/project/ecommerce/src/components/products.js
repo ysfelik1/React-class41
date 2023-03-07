@@ -1,8 +1,8 @@
 import Product from './product';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
-
 
 const Products = ({ category }) => {
   const [allProducts, setProducts] = useState([]);
@@ -22,7 +22,7 @@ const Products = ({ category }) => {
         const response = await fetch(getURL(category));
         const data = await response.json();
         setProducts(data);
-        setIsLoading(false)
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -32,13 +32,19 @@ const Products = ({ category }) => {
 
   return (
     <div>
-      {isLoading ? <Loader /> :
+      {isLoading ? (
+        <Loader />
+      ) : (
         <div className="cards">
           {allProducts.map((product) => {
-            return <Product key={product.id} {...product} />;
+            return (
+              <Link key={product.id} to={`/products/${product.id}`}>
+                <Product {...product} />
+              </Link>
+            );
           })}
         </div>
-      }
+      )}
     </div>
   );
 };
