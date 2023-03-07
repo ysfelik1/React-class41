@@ -23,11 +23,14 @@ const ProductDetail = () => {
   }
 
   return (
-    <div>
-      <h2>{product.title}</h2>
+    <div className="product-detail">
+      <h3>{product.title}</h3>
+      
+      <div className="product-info">
       <img src={product.image} alt={product.title} />
       <p>{product.description}</p>
-      <p>{product.price}</p>
+      <em><p>Price: {product.price}</p></em>
+        </div>
     </div>
   );
 };

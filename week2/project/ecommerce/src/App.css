@@ -1,7 +1,8 @@
 .App {
- font-size: 24px;
- margin: 10px;
+  font-size: 24px;
+  margin: 10px;
 }
+
 .category {
   display: flex;
 }
@@ -22,6 +23,7 @@
   background-color: dimgrey;
   font-weight: 700;
 }
+
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -33,8 +35,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap:1rem;
-  padding:1rem;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .card-title {
@@ -52,25 +54,31 @@
   width: 100%;
 }
 
+.product-detail {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  align-items: flex-start;
+}
+.product-info{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.product-detail img {
+  max-height: 300px;
+  text-align: left;
+}
+
+.product-detail p {
+  text-align: left;
+  font-size: medium;
+  font-weight:500 ;
+}
 
 @media (max-width: 600px) {
-  .card {
-    width: 90%;
-  }
   .App {
     font-size: 16px;
     margin: 2px;
-   }
-}
-
-@media (min-width: 992px) {
-  .card {
-    width: 35%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .card {
-    width: 25%;
   }
 }
