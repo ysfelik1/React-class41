@@ -25,7 +25,7 @@ function App() {
       <Categories selectCategory={selectCategory} category={category} />
       <Routes>
         <Route exact path="/" element={<Products category={category} />} />
-        <Route exact path="/products/:productId" element={<ProductDetail />} />
+        <Route exact path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </div>
   </Router>
