@@ -5,9 +5,17 @@ import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
 
+function getURL(category) {
+  let myURL = 'https://fakestoreapi.com/products';
+  if (category !== 'all') {
+    myURL = `https://fakestoreapi.com/products/category/${category}`;
+  }
+  return myURL;
+}
+
 const Products = () => {
   const [allProducts, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [category, setCategory] = useState('all');
 
@@ -19,19 +27,11 @@ const Products = () => {
     }
   }
 
-
-
   useEffect(() => {
-    function getURL(category) {
-      let myURL = 'https://fakestoreapi.com/products';
-      if (category !== 'all') {
-        myURL = `https://fakestoreapi.com/products/category/${category}`;
-      }
-      return myURL;
-    }
-
+   
     const fetchData = async () => {
       try {
+      setIsLoading(true);
         const response = await fetch(getURL(category));
         const data = await response.json();
         setProducts(data);
