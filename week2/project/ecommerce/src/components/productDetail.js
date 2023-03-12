@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import Loader from './loader';
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -19,7 +19,7 @@ const ProductDetail = () => {
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
 
   return (
