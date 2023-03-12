@@ -1,12 +1,25 @@
 import Product from './product';
+import Categories from './categories';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
 
-const Products = ({ category }) => {
+const Products = () => {
   const [allProducts, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [category, setCategory] = useState('all');
+
+  const  selectCategory=(categoryName)=> {
+    if (categoryName === category) {
+      setCategory('all');
+    } else {
+      setCategory(categoryName);
+    }
+  }
+
+
 
   useEffect(() => {
     function getURL(category) {
@@ -35,7 +48,13 @@ const Products = ({ category }) => {
       {isLoading ? (
         <Loader />
       ) : (
+
+<>
+<h1>Products</h1>
+      <Categories selectCategory={selectCategory} category={category} />
+
         <div className="cards">
+
           {allProducts.map((product) => {
             return (
               <Link key={product.id} to={`/products/${product.id}`}>
@@ -44,6 +63,7 @@ const Products = ({ category }) => {
             );
           })}
         </div>
+        </>
       )}
     </div>
   );
