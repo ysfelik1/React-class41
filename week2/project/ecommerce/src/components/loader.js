@@ -1,8 +1,8 @@
 
-const Loader = (isLoading) => {
+const Loader = () => {
     return (
-        <span class="loader">
-        <span class="loader-inner">  
+        <span className="loader">
+        <span className="loader-inner">  
           
          Loading...
       </span>
