@@ -1,8 +1,10 @@
 import Category from './category';
 import React, { useEffect, useState } from 'react';
+import ErrorPage from './errorPage';
 const Categories = ({ selectCategory, category }) => {
- 
+
   const [allCategories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -11,11 +13,16 @@ const Categories = ({ selectCategory, category }) => {
         setCategories(data);
       } catch (error) {
         console.log(error);
+        setError(error);
       }
     };
     fetchData();
   }, []);
-
+  if (error) {
+    return (
+      <ErrorPage errorText={error.message} />
+    );
+  }
 
   return (
     <div className="category">
@@ -23,9 +30,8 @@ const Categories = ({ selectCategory, category }) => {
         return (
           <Category
             key={index}
-            className={`category-item ${
-              categoryItem === category ? 'category-item-selected' : ''
-            }`}
+            className={`category-item ${categoryItem === category ? 'category-item-selected' : ''
+              }`}
             selectCategory={selectCategory}
             categoryName={categoryItem}
           />

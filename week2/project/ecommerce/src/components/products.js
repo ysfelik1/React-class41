@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
+import ErrorPage from './errorPage';
 
 function getURL(category) {
   let myURL = 'https://fakestoreapi.com/products';
@@ -18,8 +19,9 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [category, setCategory] = useState('all');
+  const [error, setError] = useState(null);
 
-  const  selectCategory=(categoryName)=> {
+  const selectCategory = (categoryName) => {
     if (categoryName === category) {
       setCategory('all');
     } else {
@@ -28,41 +30,47 @@ const Products = () => {
   }
 
   useEffect(() => {
-   
+
     const fetchData = async () => {
       try {
-      setIsLoading(true);
+        setIsLoading(true);
         const response = await fetch(getURL(category));
         const data = await response.json();
         setProducts(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setError(error);
       }
     };
     fetchData();
   }, [category]);
 
+  if (error) {
+    return (
+      <ErrorPage errorText={error.message} />
+    );
+  }
   return (
     <div>
       {isLoading ? (
         <Loader />
       ) : (
 
-<>
-<h1>Products</h1>
-      <Categories selectCategory={selectCategory} category={category} />
+        <>
+          <h1>Products</h1>
+          <Categories selectCategory={selectCategory} category={category} />
 
-        <div className="cards">
+          <div className="cards">
 
-          {allProducts.map((product) => {
-            return (
-              <Link key={product.id} to={`/products/${product.id}`}>
-                <Product {...product} />
-              </Link>
-            );
-          })}
-        </div>
+            {allProducts.map((product) => {
+              return (
+                <Link key={product.id} to={`/products/${product.id}`}>
+                  <Product {...product} />
+                </Link>
+              );
+            })}
+          </div>
         </>
       )}
     </div>
