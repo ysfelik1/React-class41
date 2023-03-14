@@ -1,6 +1,5 @@
 import React, { createContext, useState,useContext} from "react";
 
-
 const contextFavorites = createContext(null);
 
 export function useFavorites(){

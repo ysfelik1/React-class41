@@ -68,7 +68,7 @@ const Products = () => {
             
               return (
                 <React.Fragment key={product.id}>
-                <Favorite ></Favorite>
+                <Favorite productId={product.id}></Favorite>
                 
                   <Link to={`/products/${product.id}`}>
                     <Product {...product} />
