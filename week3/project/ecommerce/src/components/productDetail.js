@@ -26,19 +26,12 @@ const ProductDetail = () => {
     return <Loader/>;
   }
 
-  const handleClick = (itemId) => {
-    if (favorites.includes(itemId)) {
-      setFavorites(favorites.filter((id) => id !== itemId));
-    } else {
-      setFavorites([...favorites, itemId]);
-    }
-  };
 
   return (
     <div className="product-detail">
       <h3>{product.title}</h3>
      {console.log(favorites)} 
-      <Favorite favorites={favorites} onClick={() => handleClick(product.id)} ></Favorite> 
+      <Favorite productId={product.id} ></Favorite> 
 
       <div className="product-info">
       <img src={product.image} alt={product.title} />
