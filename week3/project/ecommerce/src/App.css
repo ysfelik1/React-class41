@@ -2,6 +2,9 @@
   font-size: 24px;
   margin: 10px;
 }
+.fav{
+  height: 25px;
+}
 
 .category {
   display: flex;
