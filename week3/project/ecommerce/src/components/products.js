@@ -1,12 +1,12 @@
 import Product from './product';
 import Categories from './categories';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
 import ErrorPage from './errorPage';
-import heartRegularSvg from './../assets/heart-regular.svg';
-import heartSolidSvg from './../assets/heart-solid.svg';
+
+import Favorite from './favorite';
 
 function getURL(category) {
   let myURL = 'https://fakestoreapi.com/products';
@@ -16,20 +16,15 @@ function getURL(category) {
   return myURL;
 }
 
+
+
+
 const Products = () => {
   const [allProducts, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState('all');
   const [error, setError] = useState(null);
-  const [favorites, setFavorites] = useState([]);
 
-  const handleClick = (itemId) => {
-    if (favorites.includes(itemId)) {
-      setFavorites(favorites.filter((id) => id !== itemId));
-    } else {
-      setFavorites([...favorites, itemId]);
-    }
-  };
 
   const selectCategory = (categoryName) => {
     if (categoryName === category) {
@@ -70,15 +65,11 @@ const Products = () => {
           <Categories selectCategory={selectCategory} category={category} />
           <div className="cards">
             {allProducts.map((product) => {
-              const isFavorite = favorites.includes(product.id);
+            
               return (
                 <React.Fragment key={product.id}>
-                  <img
-                    className='fav'
-                    src={isFavorite ? heartSolidSvg : heartRegularSvg}
-                    alt='favorite'
-                    onClick={() => handleClick(product.id)}
-                  />
+                <Favorite ></Favorite>
+                
                   <Link to={`/products/${product.id}`}>
                     <Product {...product} />
                   </Link>

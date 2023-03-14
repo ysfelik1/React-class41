@@ -6,26 +6,28 @@ import MenuLinks from './components/menuLinks';
 import Products from './components/products';
 import ProductDetail from './components/productDetail';
 
+import { FavoritesProvider } from './contexts/contextFavorite';
+
 function App() {
-  
+
   return (
 
-  
- 
-  
-  
-    <Router>
-      
-    <div className="App">
-    <div>  <MenuLinks/></div>
-      <Routes>
-        <Route exact path="/" element={<Products/>} />
-        <Route exact path="/products/:id" element={<ProductDetail />} />
-      </Routes>
-   
-    </div>
-  </Router>
 
+    <FavoritesProvider>
+
+      <Router>
+
+        <div className="App">
+          <div>  <MenuLinks /></div>
+          <Routes>
+            <Route exact path="/" element={<Products />} />
+            <Route exact path="/products/:id" element={<ProductDetail />} />
+          </Routes>
+
+        </div>
+      </Router>
+
+    </FavoritesProvider>
   );
 }
 
