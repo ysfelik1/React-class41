@@ -1,6 +1,6 @@
 import Product from './product';
 import Categories from './categories';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
@@ -16,15 +16,11 @@ function getURL(category) {
   return myURL;
 }
 
-
-
-
 const Products = () => {
   const [allProducts, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState('all');
   const [error, setError] = useState(null);
-
 
   const selectCategory = (categoryName) => {
     if (categoryName === category) {
@@ -65,11 +61,11 @@ const Products = () => {
           <Categories selectCategory={selectCategory} category={category} />
           <div className="cards">
             {allProducts.map((product) => {
-            
+
               return (
                 <React.Fragment key={product.id}>
-                <Favorite productId={product.id}></Favorite>
-                
+                  <Favorite productId={product.id}></Favorite>
+
                   <Link to={`/products/${product.id}`}>
                     <Product {...product} />
                   </Link>

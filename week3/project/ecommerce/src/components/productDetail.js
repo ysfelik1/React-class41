@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from './loader';
 import Favorite from './favorite';
-import { useFavorites } from '../contexts/contextFavorite';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const  {favorites, setFavorites}=useFavorites();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,21 +22,19 @@ const ProductDetail = () => {
   }, [id]);
 
   if (!product) {
-    return <Loader/>;
+    return <Loader />;
   }
-
 
   return (
     <div className="product-detail">
       <h3>{product.title}</h3>
-     {console.log(favorites)} 
-      <Favorite productId={product.id} ></Favorite> 
+      <Favorite productId={product.id} ></Favorite>
 
       <div className="product-info">
-      <img src={product.image} alt={product.title} />
-      <p>{product.description}</p>
-      <p>Price: {product.price}</p>
-        </div>
+        <img src={product.image} alt={product.title} />
+        <p>{product.description}</p>
+        <p>Price: {product.price}</p>
+      </div>
     </div>
   );
 };
