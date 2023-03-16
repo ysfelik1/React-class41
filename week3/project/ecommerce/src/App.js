@@ -6,7 +6,6 @@ import MenuLinks from './components/menuLinks';
 import Products from './components/products';
 import ProductDetail from './components/productDetail';
 import { FavoritesProvider } from './contexts/contextFavorite';
-import FavoriteProducts from './components/favoriteProducts';
 
 function App() {
   return (
@@ -15,9 +14,9 @@ function App() {
         <div className="App">
           <div>  <MenuLinks /></div>
           <Routes>
-            <Route exact path="/" element={<Products />} />
+            <Route exact path="/" element={<Products isFavRoute={ false } />} />
             <Route exact path="/products/:id" element={<ProductDetail />} />
-            <Route exact path="/favorites" element={<FavoriteProducts />}/>
+            <Route exact path="/favorites" element={<Products  isFavRoute={ true }/>}/>
           </Routes>
         </div>
       </Router>

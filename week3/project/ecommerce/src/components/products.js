@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
 import ErrorPage from './errorPage';
+import { useFavorites } from '../contexts/contextFavorite';
 
 import Favorite from './favorite';
 
@@ -16,11 +17,13 @@ function getURL(category) {
   return myURL;
 }
 
-const Products = () => {
+const Products = ({ isFavRoute }) => {
   const [allProducts, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState('all');
   const [error, setError] = useState(null);
+
+  const { favorites } = useFavorites();
 
   const selectCategory = (categoryName) => {
     if (categoryName === category) {
@@ -51,30 +54,54 @@ const Products = () => {
       <ErrorPage errorText={error.message} />
     );
   }
+
+  const favoriteProducts = allProducts.filter((product) =>
+    favorites.includes(product.id)
+  );
   return (
     <div>
       {isLoading ? (
         <Loader />
-      ) : (
-        <>
-          <h1>Products</h1>
-          <Categories selectCategory={selectCategory} category={category} />
-          <div className="cards">
-            {allProducts.map((product) => {
+      ) :
+        (
+          isFavRoute ? (
+            <div>
+              <h1>Favorites</h1>
+              <div className="cards">
+                {favoriteProducts.length > 0 ? (
+                  favoriteProducts.map((product) => (
+                    <React.Fragment key={product.id}>
+                      <Link to={`/favorites`}>
+                        <Product {...product} isFavRoute={isFavRoute} />
+                      </Link>
+                      <Favorite productId={product.id}></Favorite>
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <p>No favorite products selected.</p>
+                )}
+              </div>
+            </div>
+          ) :
+            <>
 
-              return (
-                <React.Fragment key={product.id}>
-                  <Favorite productId={product.id}></Favorite>
+              <h1>Products</h1>
+              <Categories selectCategory={selectCategory} category={category} />
+              <div className="cards">
+                {allProducts.map((product) => {
+                  return (
+                    <React.Fragment key={product.id}>
+                      <Link to={`/products/${product.id}`}>
+                        <Product {...product} isFavRoute={isFavRoute} />
+                      </Link>
+                      <Favorite productId={product.id}></Favorite>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            </>
 
-                  <Link to={`/products/${product.id}`}>
-                    <Product {...product} />
-                  </Link>
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </>
-      )}
+        )}
     </div>
   );
 };
