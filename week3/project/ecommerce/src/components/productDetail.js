@@ -1,47 +1,32 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from './loader';
 import Favorite from './favorite';
-import ErrorPage from './errorPage';
+import useFetch from '../useFetch';
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-        const data = await response.json();
-        setProduct(data);
-      } catch (error) {
-        console.log(error);
-        setError(error);
-      }
-    };
-    fetchData();
-  }, [id]);
 
-  if (error) {
-    return (
-      <ErrorPage errorText={error.message} />
-    );
-  }
-  if (!product) {
+  const data = useFetch(`https://fakestoreapi.com/products/${id}`);
+
+  if (!data) {
     return <Loader />;
   }
 
   return (
     <div className="product-detail">
-      <h3>{product.title}</h3>
-      <Favorite productId={product.id} ></Favorite>
+      <h3>{data.title}</h3>
+      <Favorite productId={data.id} ></Favorite>
       <div className="product-info">
-        <img src={product.image} alt={product.title} />
-        <p>{product.description}</p>
-        <p>Price: {product.price}</p>
+        <img src={data.image} alt={data.title} />
+        <p>{data.description}</p>
+        <p>Price: {data.price}</p>
       </div>
     </div>
   );
-};
+}
+
+
+
+
 
 export default ProductDetail;
