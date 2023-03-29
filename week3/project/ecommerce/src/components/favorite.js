@@ -1,7 +1,6 @@
 import heartRegularSvg from './../assets/heart-regular.svg';
 import heartSolidSvg from './../assets/heart-solid.svg';
 import { useFavorites } from '../contexts/contextFavorite';
-
 const Favorite = ({ productId }) => {
     const { favorites, setFavorites } = useFavorites();
     const isFavorite = favorites.includes(productId);

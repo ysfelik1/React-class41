@@ -8,7 +8,6 @@ import ErrorPage from './errorPage';
 import { useFavorites } from '../contexts/contextFavorite';
 
 import Favorite from './favorite';
-
 function getURL(category) {
   let myURL = 'https://fakestoreapi.com/products';
   if (category !== 'all') {
@@ -32,7 +31,6 @@ const Products = ({ isFavRoute }) => {
       setCategory(categoryName);
     }
   }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
