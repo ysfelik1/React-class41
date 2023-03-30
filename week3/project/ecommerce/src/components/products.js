@@ -1,6 +1,6 @@
 import Product from './product';
 import Categories from './categories';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../loader.css';
 import Loader from './loader';
@@ -8,6 +8,8 @@ import ErrorPage from './errorPage';
 import { useFavorites } from '../contexts/contextFavorite';
 
 import Favorite from './favorite';
+import useFetch from '../useFetch';
+
 function getURL(category) {
   let myURL = 'https://fakestoreapi.com/products';
   if (category !== 'all') {
@@ -17,10 +19,7 @@ function getURL(category) {
 }
 
 const Products = ({ isFavRoute }) => {
-  const [allProducts, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState('all');
-  const [error, setError] = useState(null);
 
   const { favorites } = useFavorites();
 
@@ -31,21 +30,12 @@ const Products = ({ isFavRoute }) => {
       setCategory(categoryName);
     }
   }
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(getURL(category));
-        const data = await response.json();
-        setProducts(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setError(error);
-      }
-    };
-    fetchData();
-  }, [category]);
+
+  const { data: allProducts, isLoading, error } = useFetch(getURL(category));
+
+  const favoriteProducts = allProducts?.filter((product) =>
+    favorites.includes(product.id)
+  );
 
   if (error) {
     return (
@@ -53,53 +43,48 @@ const Products = ({ isFavRoute }) => {
     );
   }
 
-  const favoriteProducts = allProducts.filter((product) =>
-    favorites.includes(product.id)
-  );
   return (
     <div>
       {isLoading ? (
         <Loader />
-      ) :
-        (
-          isFavRoute ? (
-            <div>
-              <h1>Favorites</h1>
-              <div className="cards">
-                {favoriteProducts.length > 0 ? (
-                  favoriteProducts.map((product) => (
-                    <React.Fragment key={product.id}>
-                      <Link to={`/favorites`}>
-                        <Product {...product} isFavRoute={isFavRoute} />
-                      </Link>
-                      <Favorite productId={product.id}></Favorite>
-                    </React.Fragment>
-                  ))
-                ) : (
-                  <p>No favorite products selected.</p>
-                )}
-              </div>
+      ) : (
+        isFavRoute ? (
+          <div>
+            <h1>Favorites</h1>
+            <div className="cards">
+              {favoriteProducts?.length > 0 ? (
+                favoriteProducts.map((product) => (
+                <div  key={product.id}>
+                    <Link to={`/favorites`}>
+                      <Product {...product} isFavRoute={isFavRoute} />
+                    </Link>
+                    <Favorite productId={product.id}></Favorite>
+                    </div>
+                ))
+              ) : (
+                <p>No favorite products selected.</p>
+              )}
             </div>
-          ) :
-            <>
-
-              <h1>Products</h1>
-              <Categories selectCategory={selectCategory} category={category} />
-              <div className="cards">
-                {allProducts.map((product) => {
-                  return (
-                    <React.Fragment key={product.id}>
-                      <Link to={`/products/${product.id}`}>
-                        <Product {...product} isFavRoute={isFavRoute} />
-                      </Link>
-                      <Favorite productId={product.id}></Favorite>
-                    </React.Fragment>
-                  );
-                })}
-              </div>
-            </>
-
-        )}
+          </div>
+        ) : (
+          <>
+            <h1>Products</h1>
+            <Categories selectCategory={selectCategory} category={category} />
+            <div className="cards">
+              {allProducts?.map((product) => {
+                return (
+                  <div  key={product.id}>
+                    <Link to={`/products/${product.id}`}>
+                      <Product {...product} isFavRoute={isFavRoute} />
+                    </Link>
+                    <Favorite productId={product.id}></Favorite>
+                    </div>
+                );
+              })}
+            </div>
+          </>
+        )
+      )}
     </div>
   );
 };

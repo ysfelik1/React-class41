@@ -1,42 +1,29 @@
 import Category from './category';
-import React, { useEffect, useState } from 'react';
+import useFetch from '../useFetch';
 import ErrorPage from './errorPage';
-const Categories = ({ selectCategory, category }) => {
 
-  const [allCategories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://fakestoreapi.com/products/categories');
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-        setError(error);
-      }
-    };
-    fetchData();
-  }, []);
+const Categories = ({ selectCategory, category }) => {
+  const { data: allCategories, error } = useFetch('https://fakestoreapi.com/products/categories');
+
   if (error) {
-    return (
-      <ErrorPage errorText={error.message} />
-    );
+    return <ErrorPage errorText={error} />;
   }
 
   return (
     <div className="category">
-      {allCategories.map((categoryItem, index) => {
-        return (
-          <Category
-            key={index}
-            className={`category-item ${categoryItem === category ? 'category-item-selected' : ''
+      {allCategories &&
+        allCategories.map((categoryItem, index) => {
+          return (
+            <Category
+              key={index}
+              className={`category-item ${
+                categoryItem === category ? 'category-item-selected' : ''
               }`}
-            selectCategory={selectCategory}
-            categoryName={categoryItem}
-          />
-        );
-      })}
+              selectCategory={selectCategory}
+              categoryName={categoryItem}
+            />
+          );
+        })}
     </div>
   );
 };
